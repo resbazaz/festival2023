@@ -11,7 +11,7 @@ head(sleep)
 install.packages("mice")
 library(mice)
 
-First, we need to know how many rows in “sleep”
+#First, we need to know how many rows in “sleep”
 nrow(sleep)
 ## [1] 62
 # We use complete.cases() or na.omit() to see tuples without missing value.
@@ -22,7 +22,7 @@ na.omit(sleep)
 nrow(sleep[complete.cases(sleep),])
 ## [1] 42
 # To reverse the condition logic (rows containing one or more missing value), we
-use the exclamation mark highlighted in Red
+#use the exclamation mark highlighted in Red
 sleep[!complete.cases(sleep),]
 nrow(sleep[!complete.cases(sleep),])
 ## [1] 20
@@ -42,7 +42,7 @@ md.pattern(sleep)
 aggr(sleep, prop = FALSE, numbers = TRUE)
 
 # call function marginplot (), pch indicates notation of obs, col tells R how you
-would like to see results in different color
+#would like to see results in different color
 marginplot(sleep[c("Gest", "Dream")], pch=c(20),
 col = c("darkgray","red","blue") )
 
@@ -54,7 +54,7 @@ main = "Mileage Data",
 ylab = "MPG",
 xlab = "Number of Cylinders" )
 
-install.packages(“vioplot”)
+install.packages("vioplot")
 library(vioplot)
 v1 <- mtcars$mpg[mtcars$cyl == 4]
 v2 <- mtcars$mpg[mtcars$cyl == 6]
@@ -62,7 +62,7 @@ v3 <- mtcars$mpg[mtcars$cyl == 8]
 # draw violin plots for vectors
 vioplot(v1,v2,v3,
 names=c(“4 cylinders”, “6 cylinders”, “8 cylinders”),
-col=“gold”)
+col="gold")
 plot(mpg ~ wt, data = mtcars)
 
 
@@ -70,6 +70,7 @@ plot(mpg ~ wt, data = mtcars)
 
 getwd()
 setwd('/xdisk/chrisreidy/workshops')
+install.packages("e1071")
 library(e1071)
 mushroom <- read.csv('Mushroom.csv', na.strings = '?')
 summary(mushroom)
@@ -84,7 +85,9 @@ mushroom.model <- naiveBayes(classes ~ . , data = train)
 mushroom.model
 mushroom.predict <- predict(mushroom.model, test, type = "class")
 results <- data.frame(actual = test[,'classes'], predicted = mushroom.predict)
+table(results)
 
+install.packages("ISLR")
 library(ISLR)
 print(head(College, 2))
 maxs <- apply(College[,2:18], 2, max)
@@ -105,9 +108,12 @@ f <- paste('Private ~', f)
 # Convert to formula
 f <- as.formula(f)
 f
+install/packages("neuralnet")
 library(neuralnet)
 nn <- neuralnet(f, train, hidden = c(10,10,10), linear.output = FALSE)
 predicted.nn.values <- compute(nn, test[2:18])
 print(head(predicted.nn.values$net.result))
 predicted.nn.values$net.result <- sapply(predicted.nn.values$net.result,
                                          round, digits = 0)
+table(test$Private, predicted.nn.values$net.result)
+plot(nn)
